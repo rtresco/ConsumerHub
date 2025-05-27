@@ -129,7 +129,7 @@
 
   <div class="view">
     <div id="spinner"></div>
-    <iframe id="viewFrame" onload="hideSpinner()"></iframe>
+    <iframe id="viewFrame" onload="//hideSpinner()"></iframe>
     <div id="message">Hello</div>
   </div>
 </div>
@@ -172,7 +172,7 @@
     const isUnsupported = unsupportedSites.some(site => hostname.includes(site));
 
     if (!isUnsupported) {
-      showSpinner();
+      //showSpinner();
       iframe.src = url;
       iframe.style.display = "block";
       message.style.display = "none";
