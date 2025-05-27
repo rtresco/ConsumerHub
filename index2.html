@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consumer Sites - Upgraded</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      background-color: #092834;
+      color: #F0F7D4;
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .nav {
+      width: 300px;
+      padding: 10px;
+      overflow-y: auto;
+      background-color: #0c3a47;
+      border-right: 2px solid #000;
+    }
+
+    .nav a {
+      display: block;
+      color: #F0F7D4;
+      text-decoration: none;
+      margin: 6px 0;
+    }
+
+    .nav a:hover {
+      color: #FF6600;
+    }
+
+    .title {
+      background-color: #000;
+      padding: 10px;
+      font-weight: bold;
+      color: #B2D732;
+      font-size: 21px;
+    }
+
+    .subtitle {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #B2D732;
+      font-size: 18px;
+    }
+
+    .view {
+      flex-grow: 1;
+      background-color: #ffffff;
+      position: relative;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
+    }
+
+    #message {
+      padding: 20px;
+      font-size: 20px;
+      color: #333;
+      display: none;
+    }
+
+    #spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="title">CONSUMER SITES - UPGRADED:</div>
+<div class="container">
+  <div class="nav">
+    <div class="subtitle">DEALS</div>
+    <a href="http://www.bensbargains.net/" onclick="handleLinkClick(event, this.href)">Ben's Bargains</a>
+    <a href="http://www.slickdeals.net/" onclick="handleLinkClick(event, this.href)">Slick Deals</a>
+    <a href="http://www.bradsdeals.com/" onclick="handleLinkClick(event, this.href)">Brad's Deals</a>
+    <a href="https://dealsea.com/" onclick="handleLinkClick(event, this.href)">dealsea</a>
+    <a href="https://www.spoofee.com/" onclick="handleLinkClick(event, this.href)">Spoofee</a>
+    <a href="http://www.techbargains.com/" onclick="handleLinkClick(event, this.href)">Tech bargains</a>
+    <a href="http://www.dealnews.com/" onclick="handleLinkClick(event, this.href)">Dealnews</a>
+    <a href="http://www.dealcatcher.com/" onclick="handleLinkClick(event, this.href)">Deal Catcher</a>
+    <a href="https://www.gottadeal.com/" onclick="handleLinkClick(event, this.href)">GottaDEAL</a>
+    <a href="https://clarkdeals.com/" onclick="handleLinkClick(event, this.href)">Clark Deals</a>
+    <a href="http://www.woot.com/" onclick="handleLinkClick(event, this.href)">Woot!</a>
+    <a href="http://www.edealinfo.com/" onclick="handleLinkClick(event, this.href)">E Deal Info</a>
+
+    <div class="subtitle">COUPONS</div>
+    <a href="https://www.couponcabin.com/" onclick="handleLinkClick(event, this.href)">Coupon Cabin</a>
+    <a href="http://www.coupons.com/" onclick="handleLinkClick(event, this.href)">Coupons.com</a>
+    <a href="http://www.retailmenot.com/" onclick="handleLinkClick(event, this.href)">RetailMeNot</a>
+
+    <div class="subtitle">PRICE COMPARISON</div>
+    <a href="http://froogle.google.com/" onclick="handleLinkClick(event, this.href)">Froogle</a>
+    <a href="http://www.shopping.com/" onclick="handleLinkClick(event, this.href)">Shopping.com</a>
+
+    <div class="subtitle">REVIEWS</div>
+    <a href="http://reviews.cnet.com/" onclick="handleLinkClick(event, this.href)">c|net Reviews</a>
+    <a href="http://www.dpreview.com/" onclick="handleLinkClick(event, this.href)">Digital Photography Review</a>
+    <a href="https://www.tomsguide.com/" onclick="handleLinkClick(event, this.href)">Tom's Guide</a>
+  </div>
+
+  <div class="view">
+    <div id="spinner"></div>
+    <iframe id="viewFrame" onload="hideSpinner()"></iframe>
+    <div id="message">Hello</div>
+  </div>
+</div>
+
+<script>
+	const message = document.getElementById("message");
+	message.innerText = "Welcome! Please click a link to the left to view the site.";
+    message.style.display = "block";
+
+
+  const unsupportedSites = [
+    "slickdeals.net",
+    "dealsea.com",
+    "dealnews.com",
+    "woot.com",
+    "couponcabin.com",
+    "google.com",
+    "shopping.com",
+    "tomsguide.com"
+  ];
+
+  function getHostname(url) {
+    return new URL(url).hostname.replace(/^www\./, '');
+  }
+
+  function showSpinner() {
+    document.getElementById("spinner").style.display = "block";
+  }
+
+  function hideSpinner() {
+    document.getElementById("spinner").style.display = "none";
+  }
+
+  function handleLinkClick(event, url) {
+    event.preventDefault();
+
+    const iframe = document.getElementById("viewFrame");
+    const hostname = getHostname(url);
+
+    const isUnsupported = unsupportedSites.some(site => hostname.includes(site));
+
+    if (!isUnsupported) {
+      showSpinner();
+      iframe.src = url;
+      iframe.style.display = "block";
+      message.style.display = "none";
+    } else {
+      iframe.style.display = "none";
+      iframe.src = "about:blank";
+      message.innerText = "This site will open in a new browser tab shortly...";
+      message.style.display = "block";
+      setTimeout(() => {
+        window.open(url, "_blank");
+        message.innerText = "This site has been opened in a new browser tab.";
+      }, 1000);
+    }
+  }
+</script>
+
+</body>
+</html>
