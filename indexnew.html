@@ -110,6 +110,11 @@
       flex: 1;
       position: relative;
       background-color: white;
+      transition: width 0.3s ease;
+    }
+
+    .container.sidebar-hidden .iframe-container {
+      width: 100%;
     }
 
     iframe {
@@ -173,11 +178,27 @@
     }
 
     @media (min-width: 769px) {
-      .hamburger { display: block; }
-      .sidebar { position: relative; z-index: 2; }
-      .iframe-container { display: block; }
-      .container.sidebar-hidden .iframe-container { width: 100%; }
+      .hamburger {
+        display: block;
+      }
+    
+      .sidebar {
+        position: relative;
+        z-index: 2;
+      }
+    
+      .iframe-container {
+        width: calc(100% - 250px);
+        flex: none;
+        display: block;
+        transition: width 0.3s ease;
+      }
+    
+      .container.sidebar-hidden .iframe-container {
+        width: 100%;
+      }
     }
+    
   </style>
 </head>
 <body>
