@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,25 +48,17 @@
       transition: all 0.3s ease;
     }
 
-.sidebar {
-  background-color: #073140;
-  color: #F0F7D4;
-  padding: 10px;
-  width: 250px;
-  height: 100%;
-  overflow-y: auto;
-  position: absolute;         /* << key change */
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 2;
-  transform: translateX(0);
-  transition: transform 0.3s ease;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+.container.sidebar-hidden .sidebar {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.container.sidebar-hidden .sidebar {
-  transform: translateX(-100%);
+.sidebar {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: auto;
 }
 
     .sidebar a {
@@ -114,14 +107,10 @@
       margin: 0;
     }
 
-.iframe-container {
-  flex: 1;
-  position: relative;
-  background-color: white;
-}
-
-    .container.sidebar-hidden .iframe-container {
-      width: 100%;
+    .iframe-container {
+      flex: 1;
+      position: relative;
+      background-color: white;
     }
 
     iframe {
@@ -185,27 +174,11 @@
     }
 
     @media (min-width: 769px) {
-      .hamburger {
-        display: block;
-      }
-    
-      .sidebar {
-        position: relative;
-        z-index: 2;
-      }
-    
-      .iframe-container {
-        width: calc(100% - 250px);
-        flex: none;
-        display: block;
-        transition: width 0.3s ease;
-      }
-    
-      .container.sidebar-hidden .iframe-container {
-        width: 100%;
-      }
+      .hamburger { display: block; }
+      .sidebar { position: relative; z-index: 2; }
+      .iframe-container { display: block; }
+      .container.sidebar-hidden .iframe-container { width: 100%; }
     }
-    
   </style>
 </head>
 <body>
