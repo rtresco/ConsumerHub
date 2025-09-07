@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Consumer Sites Style Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --bg-primary: #092834;
+  --bg-secondary: #073140;
+  --text-color: #F0F7D4;
+  --accent-color: #B2D732;
+  --highlight-color: #FF6600;
+  --titlebar-bg-color: #000000;
+  --titlebar-height: 50px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-color);
+  font-size: clamp(16px, 2.5vw, 20px);
+}
+
+.titlebar {
+  height: var(--titlebar-height);
+  background-color: var(--titlebar-bg-color);
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: bold;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+aside.sidebar {
+  width: 250px;
+  background-color: var(--bg-secondary);
+  padding: 10px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+main.iframe-container {
+  flex: 1;
+  position: relative;
+  background-color: white;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar a {
+  display: block;
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 4px 0 4px 10px;
+  font-size: 18px;
+  line-height: 1.3;
+  transition: color 0.2s;
+  flex: 1;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  color: var(--highlight-color);
+}
+
+.favicon {
+  width: 16px;
+  height: 16px;
+  margin-left: 24px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.csssubtitle {
+  margin: 15px 0 6px;
+  font-size: clamp(18px, 3vw, 20px);
+  font-weight: bold;
+  color: var(--accent-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.csssubtitle .icon {
+  font-size: 16px;
+  margin-right: 8px;
+  width: 16px;
+  display: inline-block;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.group-content {
+  overflow: hidden;
+  margin-bottom: 10px;
+  transition: max-height 0.3s ease;
+}
+
+.group-content.collapsed {
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+#paletteButtons button {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+</style>
+</head>
+<body>
+
+<div class="titlebar">STYLE GUIDE - Consumer Sites</div>
+
+<div id="paletteButtons">
+  <strong>Click to test palettes:</strong>
+  <button onclick="setPalette('default')">Default</button>
+  <button onclick="setPalette('warm')">Warm</button>
+  <button onclick="setPalette('cool')">Cool</button>
+  <button onclick="setPalette('neutral')">Neutral</button>
+  <button onclick="setPalette('sunset')">Sunset</button>
+  <button onclick="setPalette('forest')">Forest</button>
+  <button onclick="setPalette('ocean')">Ocean</button>
+  <button onclick="setPalette('desert')">Desert Sands</button>
+  <button onclick="setPalette('deepsea')">Deep Sea</button>
+  <button onclick="setPalette('candypop')">Candy Pop</button>
+  <button onclick="setPalette('minimal')">Minimalist Gray / Teal</button>
+</div>
+
+<div class="container">
+  <aside id="sidebar" class="sidebar"></aside>
+  <main class="iframe-container">
+    <iframe id="contentFrame" srcdoc=""></iframe>
+  </main>
+</div>
+
+<script>
+const palettes = {
+  default: {
+    '--bg-primary':'#092834','--bg-secondary':'#073140','--text-color':'#F0F7D4','--accent-color':'#B2D732','--highlight-color':'#FF6600','--titlebar-bg-color':'#000000'
+  },
+  warm: {
+    '--bg-primary':'#3E1F0F','--bg-secondary':'#5E3015','--text-color':'#FFF0D1','--accent-color':'#FFA533','--highlight-color':'#FF3B00','--titlebar-bg-color':'#2B1206'
+  },
+  cool: {
+    '--bg-primary':'#0D1F2D','--bg-secondary':'#113247','--text-color':'#D0E7FF','--accent-color':'#33B2FF','--highlight-color':'#00FFC8','--titlebar-bg-color':'#001F2D'
+  },
+  neutral: {
+    '--bg-primary':'#333333','--bg-secondary':'#555555','--text-color':'#F0F0F0','--accent-color':'#AAAAAA','--highlight-color':'#FFDD00','--titlebar-bg-color':'#222222'
+  },
+  sunset: {
+    '--bg-primary':'#FFDDC1','--bg-secondary':'#FFB380','--text-color':'#401100','--accent-color':'#FF4500','--highlight-color':'#FF0000','--titlebar-bg-color':'#CC3300'
+  },
+  forest: {
+    '--bg-primary':'#0B3D2E','--bg-secondary':'#12593B','--text-color':'#D0FFD6','--accent-color':'#32CD32','--highlight-color':'#00FF7F','--titlebar-bg-color':'#072A20'
+  },
+  ocean: {
+    '--bg-primary':'#0E2A47','--bg-secondary':'#145080','--text-color':'#D0EFFF','--accent-color':'#33AFFF','--highlight-color':'#00FFFF','--titlebar-bg-color':'#001F33'
+  },
+  desert: {
+    '--bg-primary':'#3A2F25','--bg-secondary':'#4C3A31','--text-color':'#FFF2E0','--accent-color':'#F4A261','--highlight-color':'#E76F51','--titlebar-bg-color':'#3A2F25'
+  },
+  deepsea: {
+    '--bg-primary':'#031E3E','--bg-secondary':'#043A6B','--text-color':'#D0EFFF','--accent-color':'#00BFFF','--highlight-color':'#FF6F61','--titlebar-bg-color':'#031E3E'
+  },
+  candypop: {
+    '--bg-primary':'#2C1A36','--bg-secondary':'#3E2C4C','--text-color':'#F3EAFD','--accent-color':'#FF79C6','--highlight-color':'#FFD93D','--titlebar-bg-color':'#2C1A36'
+  },
+  minimal: {
+    '--bg-primary':'#1F1F1F','--bg-secondary':'#2C2C2C','--text-color':'#EAEAEA','--accent-color':'#1ABC9C','--highlight-color':'#F39C12','--titlebar-bg-color':'#1F1F1F'
+  }
+};
+
+const linksData = [
+  {id:'deals', title:'DEALS', expanded:true, links:[{name:"Example 1", url:"#", iframe:true},{name:"Example 2", url:"#", iframe:false}]},
+  {id:'coupons', title:'COUPONS', expanded:false, links:[{name:"Example 3", url:"#", iframe:false},{name:"Example 4", url:"#", iframe:true}]}
+];
+
+function setPalette(name){
+  const palette=palettes[name];
+  Object.keys(palette).forEach(k=>document.documentElement.style.setProperty(k,palette[k]));
+  updateIframe();
+}
+
+function createLink(link){
+  const li=document.createElement("li");
+  li.innerHTML=`<img class="favicon" src="https://via.placeholder.com/16" alt="favicon">
+                <a href="#">${link.name}${!link.iframe?'<span class="external-icon">↗</span>':''}</a>`;
+  return li;
+}
+
+function renderSidebar(){
+  const sidebar=document.getElementById('sidebar');
+  sidebar.innerHTML='';
+  linksData.forEach(section=>{
+    const heading=document.createElement('div');
+    heading.className='csssubtitle';
+    heading.innerHTML=`<span class="icon">${section.expanded?'▼':'▶'}</span>${section.title}`;
+
+    const group=document.createElement('div');
+    group.className='group-content';
+    if(!section.expanded) group.classList.add('collapsed');
+
+    const ul=document.createElement('ul');
+    section.links.forEach(link=>ul.appendChild(createLink(link)));
+    group.appendChild(ul);
+
+    heading.addEventListener('click',()=>{
+      const collapsed=group.classList.toggle('collapsed');
+      heading.querySelector('.icon').textContent=collapsed?'▶':'▼';
+    });
+
+    sidebar.appendChild(heading);
+    sidebar.appendChild(group);
+  });
+}
+
+function updateIframe(){
+  const iframe=document.getElementById('contentFrame');
+  const styles=getComputedStyle(document.documentElement);
+  iframe.srcdoc=`<html><head><style>
+    body{margin:0;padding:20px;height:100%;background-color:${styles.getPropertyValue('--bg-primary')};color:${styles.getPropertyValue('--text-color')};font-family:Arial,Helvetica,sans-serif;}
+    h1{color:${styles.getPropertyValue('--accent-color')};}
+  </style></head><body>
+    <h1>Consumer Sites Preview</h1>
+    <p>This iframe reflects the current palette styling.</p>
+  </body></html>`;
+}
+
+window.addEventListener('load',()=>{
+  renderSidebar();
+  updateIframe();
+});
+</script>
+
+</body>
+</html>
