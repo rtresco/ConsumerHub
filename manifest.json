@@ -1,10 +1,10 @@
 {
-  "id": "/ConsumerHub/",
+  "id": "/",
   "name": "Consumer Hub",
   "short_name": "Consumer Hub",
   "description": "Quick access to shopping, deal, and consumer research sites.",
-  "start_url": "/ConsumerHub/",
-  "scope": "/ConsumerHub/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#092834",
   "theme_color": "#092834",
