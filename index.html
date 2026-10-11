@@ -50,11 +50,35 @@
       cursor: pointer;
     }
 
-    .hamburger {
-      display: none;
-      font-size: 24px;
+    .sidebar-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-right: 12px;
+      padding: 0;
+      border: 1px solid rgba(178, 215, 50, 0.55);
+      border-radius: 5px;
+      background: transparent;
+      color: var(--accent-color);
+      font-size: 23px;
+      line-height: 1;
       cursor: pointer;
-      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-toggle:hover {
+      background: rgba(178, 215, 50, 0.14);
+    }
+
+    .sidebar-toggle:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+
+    .titlebar-title {
+      cursor: pointer;
     }
 
     .container {
@@ -190,7 +214,7 @@
       .titlebar { font-size: clamp(24px, 3vw, 26px); }
       .sidebar a { font-size: 22px !important; }
       .csssubtitle { font-size: clamp(22px, 3vw, 24px); }
-      .hamburger { display: none !important; }
+      .sidebar-toggle { display: none; }
       aside.sidebar {
         position: static;
         width: 100%;
@@ -204,16 +228,25 @@
     }
 
     @media (min-width: 769px) {
-      .hamburger { display: block; }
       .sidebar { position: relative; z-index: 2; }
       main.iframe-container { display: block; }
-      .container.sidebar-hidden .iframe-container { width: 100%; }
-      .container.sidebar-hidden .sidebar { width: 0; padding: 0; }
+      .container.sidebar-hidden .sidebar {
+        width: 0;
+        min-width: 0;
+        padding: 0;
+        overflow: hidden;
+        visibility: hidden;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="titlebar" onclick="resetIframe()">CONSUMER HUB</div>
+  <div class="titlebar">
+    <button id="sidebarToggle" class="sidebar-toggle" type="button"
+      aria-label="Hide left navigation" aria-pressed="false"
+      title="Hide left navigation" onclick="event.stopPropagation(); toggleSidebar();">◧</button>
+    <span class="titlebar-title" onclick="resetIframe()">CONSUMER HUB</span>
+  </div>
   <div class="container" id="mainContainer">
     <aside id="sidebar" class="sidebar"></aside>
     <main class="iframe-container">
@@ -309,7 +342,15 @@ const container = document.getElementById("mainContainer");
 
 iframe.addEventListener('load', () => spinner.style.display = 'none');
 const isLargeScreen = () => window.innerWidth > 768;
-const toggleSidebar = () => container.classList.toggle("sidebar-hidden");
+
+function toggleSidebar() {
+  if (!isLargeScreen()) return;
+  const isHidden = container.classList.toggle("sidebar-hidden");
+  const toggle = document.getElementById("sidebarToggle");
+  toggle.setAttribute("aria-pressed", String(isHidden));
+  toggle.setAttribute("aria-label", isHidden ? "Show left navigation" : "Hide left navigation");
+  toggle.title = isHidden ? "Show left navigation" : "Hide left navigation";
+}
 
 function createLink(link) {
   const li = document.createElement("li");
@@ -533,7 +574,13 @@ window.addEventListener('load', () => {
 });
 
 window.addEventListener('resize', () => {
-  if (!isLargeScreen()) container.classList.remove('sidebar-hidden');
+  if (!isLargeScreen()) {
+    container.classList.remove('sidebar-hidden');
+    const toggle = document.getElementById("sidebarToggle");
+    toggle.setAttribute("aria-pressed", "false");
+    toggle.setAttribute("aria-label", "Hide left navigation");
+    toggle.title = "Hide left navigation";
+  }
 });
 </script>
 </body>
