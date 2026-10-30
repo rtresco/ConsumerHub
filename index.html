@@ -284,7 +284,7 @@ const linksData = [
     expanded: false,
     links: [
       { name: "Coupon Cabin", url: "https://www.couponcabin.com/", iframe: false },
-      { name: "Coupons.com", url: "https://www.coupons.com/", iframe: true },
+      { name: "Coupons.com", url: "https://www.coupons.com/", iframe: false, newTab: true },
       { name: "RetailMeNot", url: "https://www.retailmenot.com/", iframe: true }
     ]
   },
@@ -363,9 +363,16 @@ function createLink(link) {
     document.querySelectorAll('#sidebar a').forEach(l => l.classList.remove('active'));
     e.currentTarget.classList.add('active');
 
-    if (!isLargeScreen()) return window.location.href = link.url;
+    if (!isLargeScreen()) {
+      if (link.newTab) { window.open(link.url, "_blank", "noopener"); return; }
+      return window.location.href = link.url;
+    }
 
-    if (!link.iframe) {
+    if (link.newTab) {
+      window.open(link.url, "_blank", "noopener");
+      iframe.removeAttribute("src");
+      iframe.srcdoc = `<html><body style="margin:0;height:100%;display:flex;align-items:center;justify-content:center;background:#092834;color:#F0F7D4;font-family:Arial,Helvetica,sans-serif;text-align:center"><div>Coupons.com was opened in a new tab <span style="color:#FF6600">↗</span></div></body></html>`;
+    } else if (!link.iframe) {
       // Show "is opening" immediately
       iframe.removeAttribute('src');
       iframe.srcdoc = `
