@@ -356,7 +356,7 @@ function createLink(link) {
   const li = document.createElement("li");
   li.innerHTML = `
     <img class="favicon" src="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(link.url)}&size=32" alt="${link.name} favicon">
-    <a href="${link.url}" data-url="${link.url}">${link.name}${!link.iframe ? '<span class="external-icon">↗</span>' : ''}</a>
+    <a href="${link.url}" data-url="${link.url}">${link.name}${(!link.iframe || link.newTab) ? '<span class="external-icon">↗</span>' : ''}</a>
   `;
   li.querySelector("a").addEventListener("click", e => {
     e.preventDefault();
