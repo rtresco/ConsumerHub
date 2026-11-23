@@ -262,7 +262,7 @@ const linksData = [
     title: "DEALS",
     expanded: true,
     links: [
-      { name: "Ben's Bargains", url: "https://www.bensbargains.com/", iframe: true },
+      { name: "Ben's Bargains", url: "https://www.bensbargains.com/", iframe: true, newTab: true },
       { name: "Slick Deals", url: "https://slickdeals.net/", iframe: false },
       { name: "Brad's Deals", url: "https://www.bradsdeals.com/", iframe: true },
       { name: "DEALigg", url: "https://www.dealigg.com/", iframe: true },
@@ -371,7 +371,7 @@ function createLink(link) {
     if (link.newTab) {
       window.open(link.url, "_blank", "noopener");
       iframe.removeAttribute("src");
-      iframe.srcdoc = `<html><body style="margin:0;height:100%;display:flex;align-items:center;justify-content:center;background:#092834;color:#F0F7D4;font-family:Arial,Helvetica,sans-serif;text-align:center"><div>Coupons.com was opened in a new tab <span style="color:#FF6600">↗</span></div></body></html>`;
+      iframe.srcdoc = `<html><body style="margin:0;height:100%;display:flex;align-items:center;justify-content:center;background:#092834;color:#F0F7D4;font-family:Arial,Helvetica,sans-serif;text-align:center"><div>${link.name} was opened in a new tab <span style="color:#FF6600">↗</span></div></body></html>`;
     } else if (!link.iframe) {
       // Show "is opening" immediately
       iframe.removeAttribute('src');
